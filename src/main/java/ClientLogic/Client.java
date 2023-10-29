@@ -26,8 +26,12 @@ public class Client {
     public String sendMessage(String messageText) {
         try {
             writer.println(messageText);
-            String response = reader.readLine();
-            System.out.println(response);
+            String response;
+
+            while ((response = reader.readLine()) != null) {
+                System.out.println(response);
+            }
+
             return response;
 
         } catch (IOException e) {

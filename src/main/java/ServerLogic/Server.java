@@ -16,32 +16,25 @@ public class Server {
     public void start(int port) {
         try {
             serverSocket = new ServerSocket(port);
-            clientSocket = serverSocket.accept();
 
-            writer = new PrintWriter(clientSocket.getOutputStream(), true);
-            reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-            String input = reader.readLine();
-            writer.println("hello test");
-
-            System.out.println(input);
+            while(true) {
+                new ClientHandler(serverSocket.accept()).start();
+            }
 
         } catch (IOException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         }
-
     }
 
     public void stop() {
         try {
-            reader.close();
-            writer.close();
-            clientSocket.close();
             serverSocket.close();
         } catch (IOException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         }
     }
+
+
 }
